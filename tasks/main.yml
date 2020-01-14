@@ -1,0 +1,24 @@
+---
+# tasks file for ansible-podman
+
+- name: Variables by OS
+  include_vars: "{{ item }}"
+  tags: always
+  with_first_found:
+    - "{{ ansible_distribution | lower }}-{{ ansible_distribution_version | lower }}.yml"
+    - "{{ ansible_distribution | lower }}-{{ ansible_distribution_major_version | lower }}.yml"
+    - "{{ ansible_os_family | lower }}-{{ ansible_distribution_major_version | lower }}.yml"
+    - "{{ ansible_distribution | lower }}.yml"
+    - "{{ ansible_os_family | lower }}.yml"
+
+- import_tasks: podman_pre_install.yml
+  tags:
+    - podman-pre-install
+
+- import_tasks: podman_install.yml
+  tags:
+    - podman-install
+
+- import_tasks: podman_post_install.yml
+  tags:
+    - podman-post-install

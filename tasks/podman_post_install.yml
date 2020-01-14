@@ -1,0 +1,31 @@
+---
+
+- name: Post-Install | Configure podman for root
+  template: src={{ item.source }} dest={{ item.destination }}
+  with_items:
+    - source: storage.conf.j2
+      destination: "{{ podman_containers_storage }}"
+
+- name: Post-Install | Configure podman for non-root users (directory)
+  file: path=/home/{{ item.name }}/.config/containers state=directory
+  with_items: "{{ podman_users }}"
+
+- name: Post-Install | Configure podman for non-root users (storage.conf)
+  template: src=storage.conf.j2 dest={{ storage_conf_path }}
+  with_items: "{{ podman_users }}"
+  vars:
+    podman_containers_storage_additionalimagestores: []
+    podman_containers_storage_graphroot: "{{ item.graphroot }}"
+    podman_containers_storage_runroot: "{{ item.runroot }}"
+    podman_containers_storage_driver: "{{ item.storage_driver }}"
+    storage_conf_path: /home/{{ item.name }}/.config/containers/storage.conf
+
+#- name: Post-Install | Configure block device
+#  block:
+#    - name: Post-Install | Configure ZFS storage
+#      when: podman_containers_storage_driver | lower == 'zfs'
+#      import_tasks: podman_post_install_zfs.yml
+#
+#    #- name: Post-Install | Configure  storage
+#    #  when: podman_containers_storage_driver | lower == 'zfs'
+#    #  import_tasks: podman_post_install_zfs.yml

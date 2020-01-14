@@ -1,0 +1,33 @@
+---
+
+- name: restart podman service
+  service: name=podman state=restarted enabled=yes
+  when:
+    - podman_post_config_restart_on_change | lower == 'true'
+    - podman_cluster_aware | lower == 'false'
+    - podman_use_docker | lower == 'false'
+
+- name: restart podman resource
+  shell: >
+    "{{ podman_cluster_command }} resource unmanage {{ podman_cluster_resource_name }} && \
+    systemctl restart podman.service && \
+    {{ podman_cluster_command }} resource manage {{ podman_cluster_resource_name }} && \
+    {{ podman_cluster_command }} resource enable {{ podman_cluster_resource_name }}"
+  when:
+    - podman_post_config_restart_on_change | lower == 'true'
+    - podman_cluster_aware | lower == 'true'
+
+- name: reload systemd
+  systemd: daemon-reload=yes
+
+- name: reload firewalld
+  command: firewall-cmd --reload
+
+- name: reload consul
+  command: "{{ consul_bin }} reload"
+
+- name: restart telegraf
+  service: name=telegraf state=restarted
+
+- name: delete repo key file
+  file: path="{{ repo_key_result.dest }}" state=absent

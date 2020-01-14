@@ -1,0 +1,8 @@
+---
+
+podman_repo_name:
+
+podman_distro_packages:
+  - podman
+
+podman_sysconfig: /etc/sysconfig

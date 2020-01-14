@@ -1,0 +1,28 @@
+# {{ ansible_managed }}
+# storage.conf is the configuration file for all tools
+# that share the containers/storage libraries
+# See man 5 containers-storage.conf for more information
+
+# The "container storage" table contains all of the server options.
+[storage]
+
+# Default Storage Driver
+driver = "{{ podman_containers_storage_driver }}"
+
+# Temporary storage location
+runroot = "{{ podman_containers_storage_runroot }}"
+
+# Primary read-write location of container storage
+graphroot = "{{ podman_containers_storage_graphroot }}"
+
+[storage.options]
+# AdditionalImageStores is used to pass paths to additional read-only image stores
+# Must be comma separated list.
+additionalimagestores = {{ podman_containers_storage_additionalimagestores | to_json }}
+
+# Size is used to set a maximum size of the container image.  Only supported by
+# certain container storage drivers (currently overlay, zfs, vfs, btrfs)
+size = "{{ podman_containers_storage_size }}"
+
+# OverrideKernelCheck tells the driver to ignore kernel checks based on kernel version
+override_kernel_check = "{{ podman_containers_override_kernel_check }}"
