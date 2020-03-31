@@ -18,4 +18,5 @@ ExecStart=/usr/bin/podman run \
 ExecStop=/usr/bin/podman stop {{ item.name }}
 
 [Install]
-WantedBy=local.target
+WantedBy=multi-user.target
+Alias={{ item.name }}.service
