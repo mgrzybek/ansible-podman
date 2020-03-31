@@ -1,5 +1,6 @@
 [Unit]
 Description={{ item.description }}
+After=network.target
 
 [Service]
 ExecStart=/usr/bin/podman run \
