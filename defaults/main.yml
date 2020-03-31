@@ -18,7 +18,7 @@ podman_containers_override_kernel_check: "true"
 podman_package_state: present
 cache_timeout: 600
 
-podman_containers:[]
+podman_containers: []
 #  - name:
 #    run_opts:
 #    image:
