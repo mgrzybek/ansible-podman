@@ -29,3 +29,16 @@
 #    #- name: Post-Install | Configure  storage
 #    #  when: podman_containers_storage_driver | lower == 'zfs'
 #    #  import_tasks: podman_post_install_zfs.yml
+
+- name: Post-install | Create pods
+  with_items: "{{ podman_pods }}"
+  template:
+    src: container.service.j2
+    dest: /etc/systemd/systemd/{{ item.name }}.pod.service
+
+- name: Post-install | Create containers
+  with_items: "{{ podman_containers }}"
+  template:
+    src: container.service.j2
+    dest: /etc/systemd/systemd/{{ item.name }}.container.service
+

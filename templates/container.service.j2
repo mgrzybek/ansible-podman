@@ -1,0 +1,15 @@
+[Unit]
+Description=InfluxDB Service
+
+[Service]
+ExecStart=/usr/bin/podman run \
+	--name {{ item.name }} \
+	{% if item.run_opts | length > 0 %}{{ item.run_opts }} \{% endif %}
+	{{ item.image }} \
+	{{% if item.command | length > 0 %}{ item.command }} \{% endif %}
+	{{% if item.command_opts | length > 0 %}{ item.command_opts }}{% endif %}
+
+ExecStop=/usr/bin/podman stop {{ item.name }}
+
+[Install]
+WantedBy=local.target

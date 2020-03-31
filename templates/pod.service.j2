@@ -1,0 +1,12 @@
+[Unit]
+Description={{ item.description }}
+
+[Service]
+Type=oneshot
+RemainAfterExit=true
+ExecStart=/usr/bin/podman pod create --name {{ item.name }} {{ item.opts }}
+ExecStop=/usr/bin/podman pod rm -f {{ item.name }}
+
+[Install]
+WantedBy=local.target
+
