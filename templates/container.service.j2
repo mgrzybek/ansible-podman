@@ -16,7 +16,7 @@ ExecStart=/usr/bin/podman run \
 	{% if item.command_opts | length > 0 %}{{ item.command_opts }}{% endif %}
 	{% endif %}
 
-ExecStop=/usr/bin/podman stop {{ item.name }}
+ExecStop=/usr/bin/podman rm -f {{ item.name }}
 
 [Install]
 WantedBy=multi-user.target
