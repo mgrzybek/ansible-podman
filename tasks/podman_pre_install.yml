@@ -8,6 +8,9 @@
 - name: Pre-Install | APT-based
   when: ansible_os_family | lower == 'debian'
   block:
+    - name: Touch /etc/apt/sources.list
+      file: path=/etc/apt/sources.list state=file
+
     - name: Pre-Install | Add PPA repo
       #apt_repository: repo="{{ podman_repo_apt_url }}"
       command: add-apt-repository --yes "{{ podman_repo_apt_url }}"
