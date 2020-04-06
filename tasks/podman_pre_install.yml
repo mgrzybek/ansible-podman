@@ -9,7 +9,7 @@
   when: ansible_os_family | lower == 'debian'
   block:
     - name: Touch /etc/apt/sources.list
-      file: path=/etc/apt/sources.list state=file
+      file: path=/etc/apt/sources.list state=touch
 
     - name: Pre-Install | Add PPA repo
       #apt_repository: repo="{{ podman_repo_apt_url }}"
