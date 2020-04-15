@@ -30,3 +30,6 @@ podman_pods: []
 #    description:
 #    opts:
 
+podman_http_proxy:
+podman_https_proxy: "{{ podman_http_proxy }}"
+podman_http_no_proxy:

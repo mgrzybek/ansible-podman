@@ -13,7 +13,11 @@
 
     - name: Pre-Install | Add PPA repo
       #apt_repository: repo="{{ podman_repo_apt_url }}"
-      command: add-apt-repository --yes "{{ podman_repo_apt_url }}"
+      shell: add-apt-repository --yes "{{ podman_repo_apt_url }}"
+      environment:
+         https_proxy: "{{ pdoman_https_proxy }}"
+         http_proxy: "{{ pdoman_http_proxy }}"
+         no_proxy: "{{ podman_http_no_proxy }}"
 
 - name: Pre-Install | RPM-based
   when: ansible_os_family | lower == 'redhat'
