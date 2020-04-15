@@ -8,30 +8,30 @@
 - name: Pre-Install | APT-based
   when: ansible_os_family | lower == 'debian'
   block:
-    - name: Pre-Install | Use opensuse repo
+    - name: Pre-Install | Use opensuse kubic repo
       when: podman_use_ppa | lower == 'false'
       block:
           # Procedure from https://podman.io/getting-started/installation
-        - name: Pre-Install | Add PPA repo
+        - name: Pre-Install | Add kubic repo
           copy:
             content: "deb {{ podman_repo_apt_url }} /"
             dest: /etc/apt/sources.list.d/podman.list
 
-        - name: Pre-install | Add the repo key
+        - name: Pre-install | Add the kubic repo key
           shell: curl -L {{ podman_repo_key }} | apt-key add -
           environment:
-             https_proxy: "{{ pdoman_https_proxy }}"
-             http_proxy: "{{ pdoman_http_proxy }}"
+             https_proxy: "{{ podman_https_proxy }}"
+             http_proxy: "{{ podman_http_proxy }}"
              no_proxy: "{{ podman_http_no_proxy }}"
 
     - name: Pre-Install | Use PPA repo
       when: podman_use_ppa | lower == 'true'
       block:
-        - name: Add project atomic PPA
+        - name: Pre-install | Add project atomic PPA
           shell: add-apt-repository --yes -m {{ podman_ppa_repo }}
           environment:
-             https_proxy: "{{ pdoman_https_proxy }}"
-             http_proxy: "{{ pdoman_http_proxy }}"
+             https_proxy: "{{ podman_https_proxy }}"
+             http_proxy: "{{ podman_http_proxy }}"
              no_proxy: "{{ podman_http_no_proxy }}"
 
 - name: Pre-Install | RPM-based
