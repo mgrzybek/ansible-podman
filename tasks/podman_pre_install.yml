@@ -11,9 +11,9 @@
       # Procedure from https://podman.io/getting-started/installation
     - name: Pre-Install | Add PPA repo
       shell: >
-        . /etc/os-release \
+        source /etc/os-release ; \
         echo 'deb {{ podman_repo_apt_url }} /' \
-        > /etc/apt/sources.list.d/devel:kubic:libcontainers:stable.list" \
+        > /etc/apt/sources.list.d/devel:kubic:libcontainers:stable.list" ; \
         \
         curl -L {{ podman_repo_key }} | sudo apt-key add -
       environment:
