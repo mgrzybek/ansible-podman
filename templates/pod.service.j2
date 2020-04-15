@@ -5,6 +5,7 @@ After=network.target
 [Service]
 Type=oneshot
 RemainAfterExit=true
+Environment="https_proxy={{ podman_https_proxy }} http_proxy={{ podman_http_proxy }} no_proxy={{ podman_http_no_proxy }}"
 ExecStart=/usr/bin/podman pod create --name {{ item.name }} {{ item.opts }}
 ExecStop=/usr/bin/podman pod rm -f {{ item.name }}
 
