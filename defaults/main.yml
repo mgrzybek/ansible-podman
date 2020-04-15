@@ -33,3 +33,5 @@ podman_pods: []
 podman_http_proxy:
 podman_https_proxy: "{{ podman_http_proxy }}"
 podman_http_no_proxy:
+
+podman_use_ppa: true
