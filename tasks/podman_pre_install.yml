@@ -8,12 +8,14 @@
 - name: Pre-Install | APT-based
   when: ansible_os_family | lower == 'debian'
   block:
-    - name: Touch /etc/apt/sources.list
-      file: path=/etc/apt/sources.list state=touch
-
+      # Procedure from https://podman.io/getting-started/installation
     - name: Pre-Install | Add PPA repo
-      #apt_repository: repo="{{ podman_repo_apt_url }}"
-      shell: add-apt-repository --yes "{{ podman_repo_apt_url }}"
+      shell: >
+        . /etc/os-release \
+        echo 'deb {{ podman_repo_apt_url }} /' \
+        > /etc/apt/sources.list.d/devel:kubic:libcontainers:stable.list" \
+        \
+        curl -L {{ podman_repo_key }} | sudo apt-key add -
       environment:
          https_proxy: "{{ pdoman_https_proxy }}"
          http_proxy: "{{ pdoman_http_proxy }}"
