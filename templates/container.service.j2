@@ -7,7 +7,16 @@ After=network.target
 {% endif %}
 
 [Service]
-Environment="https_proxy={{ podman_https_proxy }} http_proxy={{ podman_http_proxy }} no_proxy={{ podman_http_no_proxy }}"
+{% if podman_https_proxy is defined and podman_https_proxy | length > 0 %}
+Environment="https_proxy={{ podman_https_proxy }}"
+{% endif %}
+{% if podman_http_proxy is defined and podman_http_proxy | length > 0 %}
+Environment="http_proxy={{ podman_http_proxy }}"
+{% endif %}
+{% if podman_http_no_proxy is defined and podman_http_no_proxy | length > 0 %}
+Environment="no_proxy={{ podman_http_no_proxy }}"
+{% endif %}
+
 ExecStart=/usr/bin/podman run \
 	--name {{ item.name }} \
 	{% if item.run_opts is defined and item.run_opts != None %}
