@@ -34,12 +34,6 @@
              http_proxy: "{{ podman_http_proxy }}"
              no_proxy: "{{ podman_http_no_proxy }}"
 
-- name: Pre-Install | RPM-based
-  when: ansible_os_family | lower == 'redhat'
-  block:
-    - name: Pre-Install | Enable subscription to {{ podman_repo_name }}
-      command: subscription-manager repos --enable="{{ podman_repo_name }}"
-
 - name: Pre-Install | Set local fact (mkfs_storage_device=true)
   when: podman_containers_storage_device != None
   set_fact: mkfs_storage_device=true

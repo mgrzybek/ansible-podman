@@ -1,7 +1,5 @@
 ---
 
-podman_repo_name: rhel-7-server-extras-rpms
-
 podman_distro_packages:
   - podman
 
