@@ -42,6 +42,8 @@ Install podman and create a systemd-driven container:
            - name: traefik
              description: Traefik reverse proxy
              after: my-pod.pod.service
+             selinux_sandboxing_paths:
+               - /etc/traefik
              run_opts: >
                --pod appliance
                --rm

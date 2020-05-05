@@ -24,6 +24,7 @@ podman_containers: []
 #    image:
 #    command:
 #    command_opts:
+#    selinux_sandboxing_paths: []
 
 podman_pods: []
 #  - name:

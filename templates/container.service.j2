@@ -17,6 +17,12 @@ Environment="http_proxy={{ podman_http_proxy }}"
 Environment="no_proxy={{ podman_http_no_proxy }}"
 {% endif %}
 
+{% if ansible_selinux is defined and ansible_selinux.config_mode == "enforcing" %}
+{% for path in item.selinux_sandboxing_paths %}
+ExecStartPre=chcon -Rt svirt_sandbox_file_t {{ path }}
+{% endfor %}
+{% endif %}
+
 ExecStart=/usr/bin/podman run \
 	--name {{ item.name }} \
 	{% if item.run_opts is defined and item.run_opts != None %}
