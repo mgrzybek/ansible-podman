@@ -30,9 +30,8 @@ ExecStart=/usr/bin/podman run \
 	{% if item.run_opts is defined and item.run_opts != None %}
 	{% if item.run_opts | length > 0 %}{{ item.run_opts | regex_replace('\n$', '') }} {% endif %}
 	{% endif %}
-	{{ item.image }} \
-	{% if item.command is defined and item.command != None %}
-	{% if item.command | length > 0 %}{{ item.command }}{% endif %}
+	{{ item.image }}{% if item.command is defined and item.command != None %}{% if item.command | length > 0 %} \
+	{{ item.command }}{% endif %}
 	{% endif %}
 	{% if item.command_opts is defined and item.command_opts != None %}
 	{% if item.command_opts | length > 0 %}{{ item.command_opts }}{% endif %}
