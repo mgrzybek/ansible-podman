@@ -27,7 +27,14 @@
     - name: Pre-Install | Use PPA repo
       when: podman_use_ppa | lower == 'true'
       block:
-        - name: Pre-install | Add project atomic PPA
+        - name: Pre-Install | Check project atomic PPA
+          register: ppa_source_result
+          stat:
+             path: /etc/apt/sources.list.d/projectatomic-ubuntu-ppa-{{ ansible_distribution_release }}.list
+
+        - name: Pre-Install | Add project atomic PPA
+          ignore_errors: yes
+          when: ppa_source_result.stat.exists | lower == 'true'
           shell: add-apt-repository --yes -m {{ podman_ppa_repo }}
           environment:
              https_proxy: "{{ podman_https_proxy }}"
