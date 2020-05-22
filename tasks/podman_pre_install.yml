@@ -34,7 +34,7 @@
 
         - name: Pre-Install | Add project atomic PPA
           ignore_errors: yes
-          when: ppa_source_result.stat.exists | lower == 'true'
+          when: ppa_source_result.stat.exists | lower == 'false'
           shell: add-apt-repository --yes -m {{ podman_ppa_repo }}
           environment:
              https_proxy: "{{ podman_https_proxy }}"
