@@ -31,6 +31,10 @@
 #    #  import_tasks: podman_post_install_zfs.yml
 
 - name: Post-install | Create pods
+  when:
+    - podman_pods is defined
+    - podman_pods != None
+    - podman_pods | length > 0
   with_items: "{{ podman_pods }}"
   notify: reload systemd
   template:
