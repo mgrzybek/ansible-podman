@@ -1,16 +1,16 @@
 ---
 
-#- name: Post-Install | Configure bloc device
+#- name: Post-Install | zfs | Post-Install | Configure bloc device
 #  when: mkfs_storage_device | lower == 'true'
 #  block:
-#    - name: Post-Install | Import all existing zpools
+#    - name: Post-Install | zfs | Post-Install | Import all existing zpools
 #      command: zpool import -a
 #
-#    - name: Post-Install | ZFS facts
+#    - name: Post-Install | zfs | Post-Install | ZFS facts
 #      command: zpool list -o name -H
 #      register: zfs_facts
 #
-#    - name: Post-Install | Create ZFS pool
+#    - name: Post-Install | zfs | Post-Install | Create ZFS pool
 #      when: zfs_facts.stdout.find(podman_containers_storage_zpool) < 0
 #      command: >
 #        zpool create \
@@ -18,22 +18,22 @@
 #          {{ podman_containers_storage_zpool }} \
 #          {{ podman_containers_storage_device }}
 
-- name: Post-Install | Create ZFS datasets
+- name: Post-Install | zfs | Post-Install | Create ZFS datasets
   zfs:
     name: "{{ item.name }}"
     state: present
     extra_zfs_properties:
         mountpoint: "{{ item.mountpoint }}"
   with_items:
-    - name: "{{ podman_containers_storage_zpool }}/containers"
+    - name: Post-Install | zfs | "{{ podman_containers_storage_zpool }}/containers"
       mountpoint: "{{ podman_containers_storage_root }}"
-    - name: "{{ podman_containers_storage_zpool }}/containers/storage"
+    - name: Post-Install | zfs | "{{ podman_containers_storage_zpool }}/containers/storage"
       mountpoint: "{{ podman_containers_storage_runroot }}"
 
-#- name: Post-Install | Delegate permissions to a non-root user
+#- name: Post-Install | zfs | Post-Install | Delegate permissions to a non-root user
 #  when: configure_permissions | lower == 'true'
 #  block:
-#    - name: Post-Install | Create directories
+#    - name: Post-Install | zfs | Post-Install | Create directories
 #      file:
 #        state: directory
 #        owner: "{{ item.name }}"
@@ -42,14 +42,14 @@
 #        recurse: true
 #      with_items: "{{ podman_users }}"
 
-#    - name: Post-Install | Set ZFS permissions to user {{ item }}
+#    - name: Post-Install | zfs | Post-Install | Set ZFS permissions to user {{ item }}
 #      with_items: "{{ podman_users }}"
 #      command: >
 #        zfs allow -u {{ item.name }} \
 #          clone,create,destroy,mount,mountpoint,snapshot \
 #          "{{ podman_containers_storage_zpool }}"
 
-#    - name: Post-Install | Set ZFS permissions to group {{ item }}
+#    - name: Post-Install | zfs | Post-Install | Set ZFS permissions to group {{ item }}
 #      with_items: "{{ podman_groups }}"
 #      command: >
 #        zfs allow -g {{ item }} \
