@@ -1,6 +1,6 @@
 ---
 
-- name: Install | | Install | Install podman packages
+- name: Install | Install | Install podman packages
   package:
     name: "{{ podman_distro_packages }}"
     state: "{{ podman_package_state }}"
