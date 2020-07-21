@@ -7,6 +7,9 @@ After=network.target
 {% endif %}
 
 [Service]
+Restart=always
+RestartSec={{ podman_container_restartsec }}
+
 {% if podman_https_proxy is defined and podman_https_proxy != None %}
 Environment="https_proxy={{ podman_https_proxy }}"
 {% endif %}

@@ -3,6 +3,8 @@
 podman_users: []
 podman_groups: []
 
+podman_container_restartsec: 10
+
 podman_containers_storage: /etc/containers/storage.conf
 podman_containers_storage_driver:
 podman_containers_storage_device:
