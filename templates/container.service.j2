@@ -2,8 +2,10 @@
 Description={{ item.description }}
 {% if item.after is defined and item.after != None %}
 After=network.target {{ item.after }}
+Wants=network.target {{ item.after }}
 {% else %}
 After=network.target
+Wants=network.target
 {% endif %}
 
 [Service]
