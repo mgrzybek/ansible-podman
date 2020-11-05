@@ -24,7 +24,7 @@
   command: firewall-cmd --reload
 
 - name: reload consul
-  command: "{{ consul_bin }} reload"
+  command: consul reload
 
 - name: restart telegraf
   service: name=telegraf state=restarted
