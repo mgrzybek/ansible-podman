@@ -1,38 +1,38 @@
 ---
 
-- name: Pre-Install | Pre-Install | Set local fact (default)
+- name: Pre-Install | Set local fact (default)
   set_fact:
     mkfs_storage_device: false
     configure_permissions: false
 
-- name: Pre-Install | Pre-Install | APT-based
+- name: Pre-Install | APT-based
   when: ansible_os_family | lower == 'debian'
   block:
-    - name: Pre-Install | Pre-Install | Use opensuse kubic repo
+    - name: Pre-Install | Use opensuse kubic repo
       when: podman_use_ppa | lower == 'false'
       block:
           # Procedure from https://podman.io/getting-started/installation
-        - name: Pre-Install | Pre-Install | Add kubic repo
+        - name: Pre-Install | Add kubic repo
           copy:
             content: "deb {{ podman_repo_apt_url }} /"
             dest: /etc/apt/sources.list.d/podman.list
 
-        - name: Pre-Install | Pre-install | Add the kubic repo key
+        - name: Pre-install | Add the kubic repo key
           shell: curl -L {{ podman_repo_key }} | apt-key add -
           environment:
              https_proxy: "{{ podman_https_proxy }}"
              http_proxy: "{{ podman_http_proxy }}"
              no_proxy: "{{ podman_http_no_proxy }}"
 
-    - name: Pre-Install | Pre-Install | Use PPA repo
+    - name: Pre-Install | Use PPA repo
       when: podman_use_ppa | lower == 'true'
       block:
-        - name: Pre-Install | Pre-Install | Check project atomic PPA
+        - name: Pre-Install | Check project atomic PPA
           register: ppa_source_result
           stat:
              path: /etc/apt/sources.list.d/projectatomic-ubuntu-ppa-{{ ansible_distribution_release }}.list
 
-        - name: Pre-Install | Pre-Install | Add project atomic PPA
+        - name: Pre-Install | Add project atomic PPA
           ignore_errors: yes
           when: ppa_source_result.stat.exists | lower == 'false'
           shell: add-apt-repository --yes -m {{ podman_ppa_repo }}
@@ -41,14 +41,14 @@
              http_proxy: "{{ podman_http_proxy }}"
              no_proxy: "{{ podman_http_no_proxy }}"
 
-- name: Pre-Install | Pre-Install | Set local fact (mkfs_storage_device=true)
+- name: Pre-Install | Set local fact (mkfs_storage_device=true)
   when: podman_containers_storage_device != None
   set_fact: mkfs_storage_device=true
 
-- name: Pre-Install | Pre-Install | Set local fact (configure_permissions=true)
+- name: Pre-Install | Set local fact (configure_permissions=true)
   when: podman_users | length > 0 or podman_groups | length > 0
   set_fact: configure_permissions=true
 
-- name: Pre-Install | Pre-Install | Test {{ podman_containers_storage_device }}
+- name: Pre-Install | Test {{ podman_containers_storage_device }}
   when: mkfs_storage_device | lower == 'true'
   command: test -e {{ podman_containers_storage_device }}
