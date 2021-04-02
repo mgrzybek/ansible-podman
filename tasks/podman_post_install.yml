@@ -48,3 +48,15 @@
     src: container.service.j2
     dest: /etc/systemd/system/{{ item.name }}.container.service
 
+- name: Post-Install | Pull containers
+  when: podman_pull_containers | lower == ’true’
+  with_items: '{{ podman_containers }}'
+  register: pull_image
+  until: pull_image is success
+  retries: 5
+  delay: 30
+  shell: podman pull {{ item.image }}
+  environment:
+    https_proxy: '{{ podman_https_proxy }}'
+    http_proxy: '{{ podman_http_proxy }}'
+    no_proxy: '{{ podman_no_proxy }}'

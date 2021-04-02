@@ -34,6 +34,7 @@ Install podman and create a systemd-driven container:
       roles:
          - role: ansible-podman
       vars:
+         podman_pull_containers: true
          podman_pods:
            - name: mypod
              description: My custom POD
