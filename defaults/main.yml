@@ -1,5 +1,3 @@
----
-
 podman_users: []
 podman_groups: []
 
@@ -9,13 +7,13 @@ podman_containers_storage: /etc/containers/storage.conf
 podman_containers_storage_driver:
 podman_containers_storage_device:
 podman_containers_storage_root: /var/run/containers
-podman_containers_storage_runroot: "{{ podman_containers_storage_root }}/storage"
-podman_containers_storage_graphroot: "{{ podman_containers_storage_root }}/storage"
+podman_containers_storage_runroot: '{{ podman_containers_storage_root }}/storage'
+podman_containers_storage_graphroot: '{{ podman_containers_storage_root }}/storage'
 
 podman_containers_storage_additionalimagestores: []
 
-podman_containers_storage_size: 
-podman_containers_override_kernel_check: "true"
+podman_containers_storage_size:
+podman_containers_override_kernel_check: 'true'
 
 podman_package_state: present
 cache_timeout: 600
@@ -34,7 +32,7 @@ podman_pods: []
 #    opts:
 
 podman_http_proxy:
-podman_https_proxy: "{{ podman_http_proxy }}"
+podman_https_proxy: '{{ podman_http_proxy }}'
 podman_http_no_proxy:
 
 podman_use_ppa: true

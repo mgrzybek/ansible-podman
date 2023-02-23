@@ -1,5 +1,3 @@
----
-
 #- name: Post-Install | zfs | Configure bloc device
 #  when: mkfs_storage_device | lower == 'true'
 #  block:
@@ -20,15 +18,15 @@
 
 - name: Post-Install | zfs | Create ZFS datasets
   zfs:
-    name: "{{ item.name }}"
+    name: '{{ item.name }}'
     state: present
     extra_zfs_properties:
-        mountpoint: "{{ item.mountpoint }}"
+      mountpoint: '{{ item.mountpoint }}'
   with_items:
-    - name: Post-Install | zfs | "{{ podman_containers_storage_zpool }}/containers"
-      mountpoint: "{{ podman_containers_storage_root }}"
-    - name: Post-Install | zfs | "{{ podman_containers_storage_zpool }}/containers/storage"
-      mountpoint: "{{ podman_containers_storage_runroot }}"
+  - name: Post-Install | zfs | "{{ podman_containers_storage_zpool }}/containers"
+    mountpoint: '{{ podman_containers_storage_root }}'
+  - name: Post-Install | zfs | "{{ podman_containers_storage_zpool }}/containers/storage"
+    mountpoint: '{{ podman_containers_storage_runroot }}'
 
 #- name: Post-Install | zfs | Delegate permissions to a non-root user
 #  when: configure_permissions | lower == 'true'

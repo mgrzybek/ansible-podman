@@ -1,9 +1,7 @@
----
-
 - name: Install | Install podman packages
   package:
-    name: "{{ podman_distro_packages }}"
-    state: "{{ podman_package_state }}"
+    name: '{{ podman_distro_packages }}'
+    state: '{{ podman_package_state }}'
     update_cache: "{{ (ansible_pkg_mgr == 'apt') | ternary('yes', omit) }}"
     cache_valid_time: "{{ (ansible_pkg_mgr == 'apt') | ternary(cache_timeout, omit) }}"
   register: install_packages
@@ -11,6 +9,6 @@
   retries: 5
   delay: 2
   tags:
-    - install-apt
-    - install-yum
-    - install-zypper
+  - install-apt
+  - install-yum
+  - install-zypper

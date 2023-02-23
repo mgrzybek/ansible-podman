@@ -1,6 +1,4 @@
----
-
 podman_distro_packages:
-  - podman
+- podman
 
 podman_sysconfig: /etc/sysconfig
