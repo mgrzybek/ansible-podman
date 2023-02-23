@@ -1,12 +1,3 @@
-podman_repo_apt_url: https://download.opensuse.org/repositories/devel:/kubic:/libcontainers:/stable/xUbuntu_{{ ansible_distribution_version }}/
-podman_repo_key: https://download.opensuse.org/repositories/devel:/kubic:/libcontainers:/stable/xUbuntu_{{ ansible_distribution_version }}/Release.key
-
-podman_ppa_repo: ppa:projectatomic/ppa
-
-podman_pre_distro_packages:
-- software-properties-common
-- uidmap
-
 podman_distro_packages:
 - podman
 
