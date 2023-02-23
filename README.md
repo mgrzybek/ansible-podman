@@ -44,18 +44,18 @@ Install podman and create a systemd-driven container:
              description: Traefik reverse proxy
              after: my-pod.pod.service
              selinux_sandboxing_paths:
-               - /etc/traefik
-             run_opts: >
-               --pod appliance
-               --rm
+             - /etc/traefik
+             run_opts:
+             - --pod appliance
+             - --rm
              image: docker.io/library/traefik
              command: traefik
-             command_opts: >
-               --entrypoints.web.address=:8080
-               --accesslog=false
-               --accesslog.format=json
-               --log=true
-               --log.format=json
+             command_opts:
+             - --entrypoints.web.address=:8080
+             - --accesslog=false
+             - --accesslog.format=json
+             - --log=true
+             - --log.format=json
 
 Install podman and configure storage for non-root users:
 
