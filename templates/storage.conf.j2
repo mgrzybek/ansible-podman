@@ -23,6 +23,3 @@ additionalimagestores = {{ podman_containers_storage_additionalimagestores | to_
 # Size is used to set a maximum size of the container image.  Only supported by
 # certain container storage drivers (currently overlay, zfs, vfs, btrfs)
 size = "{{ podman_containers_storage_size }}"
-
-# OverrideKernelCheck tells the driver to ignore kernel checks based on kernel version
-override_kernel_check = "{{ podman_containers_override_kernel_check }}"

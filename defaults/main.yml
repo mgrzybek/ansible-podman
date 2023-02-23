@@ -13,7 +13,6 @@ podman_containers_storage_graphroot: '{{ podman_containers_storage_root }}/stora
 podman_containers_storage_additionalimagestores: []
 
 podman_containers_storage_size:
-podman_containers_override_kernel_check: 'true'
 
 podman_package_state: present
 cache_timeout: 600
