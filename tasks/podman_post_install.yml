@@ -47,7 +47,7 @@
     dest: /etc/systemd/system/{{ item.name }}.container.service
 
 - name: Post-Install | Pull containers
-  when: podman_pull_containers | lower == ’true’
+  when: podman_pull_containers | lower == 'true'
   with_items: '{{ podman_containers }}'
   register: pull_image
   until: pull_image is success
