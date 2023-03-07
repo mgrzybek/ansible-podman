@@ -34,6 +34,4 @@ podman_http_proxy:
 podman_https_proxy: '{{ podman_http_proxy }}'
 podman_http_no_proxy:
 
-podman_use_ppa: true
-
 podman_pull_containers: false
