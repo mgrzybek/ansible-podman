@@ -1,0 +1,6 @@
+podman_distro_packages:
+- community/podman
+
+podman_sysconfig: /etc/default
+
+podman_containers_storage_zpool: containers
