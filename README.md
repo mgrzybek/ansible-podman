@@ -11,6 +11,50 @@ If ZFS is used, an existing zpool has to be provided.
 Role Variables
 --------------
 
+```yaml
+# Configure podman for non-root users and groups
+podman_users: []
+podman_groups: []
+
+podman_container_restartsec: 10
+
+# Storage management (storage.conf)
+podman_containers_storage: /etc/containers/storage.conf
+podman_containers_storage_driver: overlay
+podman_containers_storage_device:
+podman_containers_storage_root: /var/run/containers
+podman_containers_storage_runroot: '{{ podman_containers_storage_root }}/storage'
+podman_containers_storage_graphroot: '{{ podman_containers_storage_root }}/storage'
+podman_containers_storage_additionalimagestores: []
+podman_containers_storage_size:
+
+# Package management
+podman_package_state: present # present or latest
+cache_timeout: 600
+
+# Array of container definitions
+podman_containers: []
+#  - name:
+#    run_opts:
+#    image:
+#    command:
+#    command_opts:
+#    selinux_sandboxing_paths: []
+
+# Array of pods definitions
+podman_pods: []
+#  - name:
+#    description:
+#    opts:
+
+# Proxy management
+podman_http_proxy:
+podman_https_proxy: '{{ podman_http_proxy }}'
+podman_http_no_proxy:
+
+# Do we pull concainers before starting the service?
+podman_pull_containers: false
+```
 
 Dependencies
 ------------
@@ -34,6 +78,7 @@ Install podman and create a systemd-driven container:
       roles:
          - role: ansible-podman
       vars:
+         podman_post_config_restart_on_change: true
          podman_pull_containers: true
          podman_pods:
            - name: mypod
